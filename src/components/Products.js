@@ -13,42 +13,34 @@ const ProductList = [
   {
     name: "Add",
     description: "Description 1",
-    position: 0,
   },
   {
     name: "Product 1",
     description: "Description 1",
-    position: 1,
   },
   {
     name: "Product 2",
     description: "Description 2",
-    position: 2,
   },
   {
     name: "Product 3",
     description: "Description 3",
-    position: 3,
   },
   {
     name: "Product 4",
     description: "Description 4",
-    position: 4,
   },
   {
     name: "Product 5",
     description: "Description 5",
-    position: 5,
   },
   {
     name: "Product 6",
     description: "Description 6",
-    position: 6,
   },
   {
     name: "Product 7",
     description: "Description 7",
-    position: 7,
   },
 ];
 
@@ -66,6 +58,7 @@ function Products() {
       justifyContent: "center",
       color: theme.palette.text.secondary,
       margin: "2em",
+      cursor: "pointer",
     },
     control: {
       padding: theme.spacing(2),
@@ -91,10 +84,14 @@ function Products() {
       return;
     } else {
       const nextState = swap(items, sourceIndex, targetIndex);
+      nextState.forEach((item, index) => {
+        item["position"] = index;
+      });
       setItems(nextState);
     }
   };
 
+  console.log(items);
   return (
     <ProductsContainer>
       <GridContextProvider onChange={onChange}>
@@ -104,15 +101,15 @@ function Products() {
           rowHeight={300}
           style={{ height: "200vh" }}
         >
-          {items.map((item) =>
-            item.position === 0 ? (
+          {items.map((item, index) =>
+            item.name === "Add" ? (
               <GridItem
                 onClick={() => addProduct(items.length)}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   return false;
                 }}
-                key={item.position}
+                key={item.name}
               >
                 <Product>
                   <Paper className={classes.paper}>
@@ -121,7 +118,7 @@ function Products() {
                 </Product>
               </GridItem>
             ) : (
-              <GridItem key={item.position}>
+              <GridItem key={item.name}>
                 <Product>
                   <Paper className={classes.paper}>{item.name}</Paper>
                 </Product>
