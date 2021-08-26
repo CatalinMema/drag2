@@ -72,18 +72,21 @@ function Products() {
     },
   }));
   const classes = useStyles();
-  const [items, setItems] = useState(ProductList); // supply your own state
+  const [items, setItems] = useState(ProductList);
 
   const addProduct = (number) => {
     items.push({
-      name: `Product${number}`,
+      name: `Product ${number}`,
       description: `Description ${number}`,
       position: number,
     });
     console.log("Activated");
+    console.log(items);
+    onChange(items, items.length - 1, items.length);
   };
 
   const onChange = (sourceId, sourceIndex, targetIndex) => {
+    console.log(sourceId);
     if (targetIndex === 0) {
       return;
     } else {
@@ -92,7 +95,6 @@ function Products() {
     }
   };
 
-  console.log(items);
   return (
     <ProductsContainer>
       <GridContextProvider onChange={onChange}>
@@ -100,7 +102,7 @@ function Products() {
           id="items"
           boxesPerRow={4}
           rowHeight={300}
-          style={{ height: "800px" }}
+          style={{ height: "200vh" }}
         >
           {items.map((item) =>
             item.position === 0 ? (
